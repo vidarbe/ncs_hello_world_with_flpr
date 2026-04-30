@@ -14,7 +14,7 @@ file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/include")
 
 add_custom_command(
     OUTPUT  "${FLPR_HDR}"
-    COMMAND "${PYTHON_EXECUTABLE}"
+    COMMAND "${PYTHON_EXECUTABLE}" -X utf8
                 "${BIN2HDR}"
                 --input      "${FLPR_BIN}"
                 --output     "${FLPR_HDR}"
