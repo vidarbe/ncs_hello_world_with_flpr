@@ -1,0 +1,23 @@
+sample:
+  name: Hello World with FLPR + BLE DFU
+  description: |
+    Multi-image sysbuild sample that runs Hello World on the application
+    core and the FLPR coprocessor of the nRF54L15. The FLPR firmware is
+    embedded in the application image as a C array and started at runtime;
+    firmware updates are performed over Bluetooth.
+
+common:
+  sysbuild: true
+  tags:
+    - ci_samples_nrf_sysbuild_hello_world_flpr
+    - bluetooth
+    - mcumgr
+    - dfu
+
+tests:
+  sample.sysbuild.hello_world_with_flpr:
+    platform_allow:
+      - nrf54l15dk/nrf54l15/cpuapp
+    integration_platforms:
+      - nrf54l15dk/nrf54l15/cpuapp
+    build_only: true

@@ -1,0 +1,7 @@
+#include "../../../memory_map.dtsi"
+
+/ {
+	chosen {
+		zephyr,code-partition = &boot_partition;
+	};
+};

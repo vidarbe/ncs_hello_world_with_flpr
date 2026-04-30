@@ -1,0 +1,9 @@
+/* Applying changes from https://github.com/zephyrproject-rtos/zephyr/commit/b8ab27aa401ebb3a7e05ee130b8856eb7a084405
+ * just to avoid a build warning for the FLPR/coprocessor build. 
+ */
+&cpuflpr_rram {
+	ranges;
+	partitions {
+		ranges;
+	};
+};
