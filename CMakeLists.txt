@@ -26,8 +26,10 @@ add_custom_command(
 
 add_custom_target(flpr_header_gen DEPENDS "${FLPR_HDR}")
 add_dependencies(app flpr_header_gen)
-target_include_directories(app PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/include")
-target_sources(app PRIVATE 
+target_include_directories(app PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/include"
+				 "${CMAKE_CURRENT_SOURCE_DIR}/ipc")
+target_sources(app PRIVATE
     src/main.c
     src/ble_dfu.c
+    src/ipc_demo.c
 )

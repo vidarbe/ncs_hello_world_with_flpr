@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#include <zephyr/sys/printk.h>
+#include "ipc_demo.h"
 
 int main(void)
 {
-	printk("Hello world from %s\n", CONFIG_BOARD_TARGET);
+	ipc_demo_remote_main();
 	return 0;
 }

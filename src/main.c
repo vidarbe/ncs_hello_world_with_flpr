@@ -11,6 +11,8 @@
 #include <ram_pwrdn.h>
 #include <zephyr/logging/log.h>
 
+#include "ipc_demo.h"
+
 #define LOG_MODULE_NAME app
 LOG_MODULE_REGISTER(LOG_MODULE_NAME);
 
@@ -60,7 +62,11 @@ int main(void)
 {
 	LOG_INF("Hello world from %s. Version: %s", CONFIG_BOARD_TARGET, APP_VERSION_STRING);
 	flpr_start();
-	k_msleep(1000);
+	k_msleep(200);
+	if (ipc_demo_host_run() != 0) {
+		LOG_WRN("IPC demo failed (see logs above)");
+	}
+	k_msleep(500);
 	flpr_stop();
 	return 0;
 }

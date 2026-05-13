@@ -1,3 +1,40 @@
+/ {
+	reserved-memory {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		/* FLPR tx/rx phys addresses crossed vs cpuapp (Nordic icmsg pattern). */
+		sram_tx: memory@20020000 {
+			reg = <0x20020000 0x4000>;
+		};
+
+		sram_rx: memory@20024000 {
+			reg = <0x20024000 0x4000>;
+		};
+	};
+
+	ipc {
+		ipc0: ipc0 {
+			compatible = "zephyr,ipc-icmsg";
+			dcache-alignment = <32>;
+			tx-region = <&sram_tx>;
+			rx-region = <&sram_rx>;
+			mboxes = <&cpuflpr_vevif_rx 21>, <&cpuflpr_vevif_tx 20>;
+			mbox-names = "rx", "tx";
+			status = "okay";
+		};
+	};
+};
+
+&cpuflpr_vevif_rx {
+	status = "okay";
+};
+
+&cpuflpr_vevif_tx {
+	status = "okay";
+};
+
 /* Applying changes from https://github.com/zephyrproject-rtos/zephyr/commit/b8ab27aa401ebb3a7e05ee130b8856eb7a084405
  * just to avoid a build warning for the FLPR/coprocessor build. 
  */

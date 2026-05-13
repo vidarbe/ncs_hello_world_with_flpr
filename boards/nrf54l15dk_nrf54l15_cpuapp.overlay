@@ -4,7 +4,7 @@
 	chosen {
 		zephyr,code-partition = &slot0_partition;
 	};
-	
+
 	soc {
 		cpuflpr_sram_code_data: memory@20028000 {
 			compatible = "mmio-sram";
@@ -15,7 +15,33 @@
 		};
 	};
 
+	reserved-memory {
+		#address-cells = <1>;
+		#size-cells = <1>;
+		ranges;
+
+		sram_rx: memory@20020000 {
+			reg = <0x20020000 0x4000>;
+		};
+
+		sram_tx: memory@20024000 {
+			reg = <0x20024000 0x4000>;
+		};
+	};
+
+	ipc {
+		ipc0: ipc0 {
+			compatible = "zephyr,ipc-icmsg";
+			dcache-alignment = <32>;
+			tx-region = <&sram_tx>;
+			rx-region = <&sram_rx>;
+			mboxes = <&cpuapp_vevif_rx 20>, <&cpuapp_vevif_tx 21>;
+			mbox-names = "rx", "tx";
+			status = "okay";
+		};
+	};
 };
+
 &cpuflpr_vpr {
 	execution-memory = <&cpuflpr_sram_code_data>;
 };
@@ -29,10 +55,14 @@
 };
 
 &cpuapp_sram {
-	reg = <0x20000000 DT_SIZE_K(160)>;
-	ranges = <0x0 0x20000000 0x28000>;
+	reg = <0x20000000 DT_SIZE_K(128)>;
+	ranges = <0x0 0x20000000 0x20000>;
 };
 
 &cpuapp_vevif_tx {
+	status = "okay";
+};
+
+&cpuapp_vevif_rx {
 	status = "okay";
 };
